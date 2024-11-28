@@ -29,7 +29,7 @@ let RegisterService = class RegisterService {
             $or: [{ name }, { email }, { phone_number }],
         });
         if (existingUser) {
-            throw new Error('Username, email, or phone number already exists');
+            throw new Error("Username, email, or phone number already exists");
         }
         const hashedPassword = bcrypt.hashSync(password, 10);
         const newUser = await this.registerModel.create({
@@ -46,21 +46,30 @@ let RegisterService = class RegisterService {
         const { email, password } = loginDto;
         const user = await this.registerModel.findOne({ email });
         if (!user) {
-            throw new common_1.NotFoundException('User not found');
+            throw new common_1.NotFoundException("User not found");
         }
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            throw new common_1.UnauthorizedException('Invalid credentials');
+            throw new common_1.UnauthorizedException("Invalid credentials");
         }
         const payload = { email: user.email, sub: user._id };
         const accessToken = this.jwtService.sign(payload);
         return { accessToken };
     }
+    async getUserByEmail(email) {
+        const user = await this.registerModel
+            .findOne({ email })
+            .select("-password");
+        if (!user) {
+            throw new common_1.NotFoundException("User not found");
+        }
+        return user;
+    }
 };
 exports.RegisterService = RegisterService;
 exports.RegisterService = RegisterService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)('Register')),
+    __param(0, (0, mongoose_1.InjectModel)("Register")),
     __metadata("design:paramtypes", [mongoose_2.Model,
         jwt_1.JwtService])
 ], RegisterService);

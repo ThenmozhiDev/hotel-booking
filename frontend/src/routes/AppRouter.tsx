@@ -3,6 +3,9 @@ import routes from "./routes";
 import LoginPage from "../login/LoginPage";
 import AppLayout from "../AppLayout";
 import RegisterPage from "../register/RegisterPage";
+import HomePage from "../pages/HomePage";
+import HotelDetailsPage from "../pages/HotelDetailsPage";
+import SearchContent from "../pages/SearchContent";
 
 export default function AppRouter() {
   return (
@@ -10,7 +13,11 @@ export default function AppRouter() {
       <Routes>
         <Route path={routes.LOGIN} element={<LoginPage />} />
         <Route path={routes.REGISTER} element={<RegisterPage />} />
-        <Route path={routes.ROOT} element={<AppLayout />}></Route>
+        <Route path={routes.ROOT} element={<AppLayout />}>
+          <Route path={routes.ROOT} element={<HomePage />} />
+          <Route path={routes.HOTEL(":id")} element={<HotelDetailsPage />} />
+          <Route path={routes.SEARCH_HOTEL} element={<SearchContent />} />
+        </Route>
 
         {/* <Route path={routes.JOB_DETAILS(":id")} element={<JobDetailsPage />} />
           <Route path={routes.JOB_UPDATE(":id")} element={<AddJobPage />} />

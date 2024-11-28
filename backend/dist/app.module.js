@@ -15,21 +15,33 @@ const register_schema_1 = require("./register/schema/register.schema");
 const register_controller_1 = require("./register/register.controller");
 const register_service_1 = require("./register/register.service");
 const jwt_1 = require("@nestjs/jwt");
+const hotelDetails_service_1 = require("./hotel-details/hotelDetails.service");
+const hotelDetails_controller_1 = require("./hotel-details/hotelDetails.controller");
+const hotelDetails_schema_1 = require("./hotel-details/schema/hotelDetails.schema");
+const hotelFetchDetails_controller_1 = require("./hotel-details/hotelFetchDetails.controller");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forRoot('mongodb://localhost:27017/hotel-booking'),
-            mongoose_1.MongooseModule.forFeature([{ name: 'Register', schema: register_schema_1.RegisterSchema }]),
+            mongoose_1.MongooseModule.forRoot("mongodb://localhost:27017/hotel-booking"),
+            mongoose_1.MongooseModule.forFeature([{ name: "Register", schema: register_schema_1.RegisterSchema }]),
+            mongoose_1.MongooseModule.forFeature([
+                { name: "HotelDetails", schema: hotelDetails_schema_1.HotelDetailsSchema },
+            ]),
             jwt_1.JwtModule.register({
-                secret: 'your-jwt-secret',
-                signOptions: { expiresIn: '1h' },
+                secret: "your-jwt-secret",
+                signOptions: { expiresIn: "1h" },
             }),
         ],
-        controllers: [app_controller_1.AppController, register_controller_1.RegisterController],
-        providers: [app_service_1.AppService, register_service_1.RegisterService],
+        controllers: [
+            app_controller_1.AppController,
+            register_controller_1.RegisterController,
+            hotelDetails_controller_1.HotelDetailsController,
+            hotelFetchDetails_controller_1.HotelFetchDetailsController,
+        ],
+        providers: [app_service_1.AppService, register_service_1.RegisterService, hotelDetails_service_1.HotelDetailsService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

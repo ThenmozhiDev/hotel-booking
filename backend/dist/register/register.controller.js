@@ -24,34 +24,48 @@ let RegisterController = class RegisterController {
     async signUp(createRegisterDto) {
         try {
             const newUser = await this.registerService.createUser(createRegisterDto);
-            return { message: 'User registered successfully', user: newUser };
+            return { message: "User registered successfully", user: newUser };
         }
         catch (error) {
-            throw new common_1.BadRequestException(error.message || 'Failed to register user');
+            throw new common_1.BadRequestException(error.message || "Failed to register user");
         }
     }
     async login(loginDto) {
         const { accessToken } = await this.registerService.login(loginDto);
         return { accessToken };
     }
+    async getUserByEmail(email) {
+        if (!email) {
+            throw new Error("Email parameter is required");
+        }
+        const user = await this.registerService.getUserByEmail(email);
+        return user;
+    }
 };
 exports.RegisterController = RegisterController;
 __decorate([
-    (0, common_1.Post)('signup'),
+    (0, common_1.Post)("signup"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [register_dto_1.RegisterDto]),
     __metadata("design:returntype", Promise)
 ], RegisterController.prototype, "signUp", null);
 __decorate([
-    (0, common_1.Post)('login'),
+    (0, common_1.Post)("login"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [login_dto_1.LoginDto]),
     __metadata("design:returntype", Promise)
 ], RegisterController.prototype, "login", null);
+__decorate([
+    (0, common_1.Get)("user"),
+    __param(0, (0, common_1.Query)("email")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], RegisterController.prototype, "getUserByEmail", null);
 exports.RegisterController = RegisterController = __decorate([
-    (0, common_1.Controller)('register'),
+    (0, common_1.Controller)("register"),
     __metadata("design:paramtypes", [register_service_1.RegisterService])
 ], RegisterController);
 //# sourceMappingURL=register.controller.js.map

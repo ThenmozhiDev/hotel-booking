@@ -2,20 +2,20 @@ import {
   Injectable,
   NotFoundException,
   UnauthorizedException,
-} from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Register } from './schema/register.schema';
-import { RegisterDto } from './dto/register.dto';
-import * as bcrypt from 'bcryptjs';
-import { LoginDto } from 'src/Login/dto/login.dto';
-import { JwtService } from '@nestjs/jwt';
+} from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { Register } from "./schema/register.schema";
+import { RegisterDto } from "./dto/register.dto";
+import * as bcrypt from "bcryptjs";
+import { LoginDto } from "src/Login/dto/login.dto";
+import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class RegisterService {
   constructor(
-    @InjectModel('Register') private readonly registerModel: Model<Register>,
-    private readonly jwtService: JwtService,
+    @InjectModel("Register") private readonly registerModel: Model<Register>,
+    private readonly jwtService: JwtService
   ) {}
 
   async createUser(createRegisterDto: RegisterDto): Promise<Register> {
@@ -27,7 +27,7 @@ export class RegisterService {
     });
 
     if (existingUser) {
-      throw new Error('Username, email, or phone number already exists');
+      throw new Error("Username, email, or phone number already exists");
     }
 
     // Hash the password before saving it
@@ -53,13 +53,13 @@ export class RegisterService {
     // Find user by email
     const user = await this.registerModel.findOne({ email });
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException("User not found");
     }
 
     // Compare password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException("Invalid credentials");
     }
 
     // Generate JWT
@@ -67,5 +67,15 @@ export class RegisterService {
     const accessToken = this.jwtService.sign(payload);
 
     return { accessToken };
+  }
+
+  async getUserByEmail(email: string): Promise<Register> {
+    const user = await this.registerModel
+      .findOne({ email })
+      .select("-password");
+    if (!user) {
+      throw new NotFoundException("User not found");
+    }
+    return user;
   }
 }

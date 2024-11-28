@@ -9,7 +9,7 @@ export default class RegisterApi {
         "http://localhost:8000/register/signup",
         users
       );
-      toast.success("User Created Successfully");
+      toast.success("User Registration Successfully created");
       return details.data;
     } catch (e) {
       console.log(e, "Failed to create user");
@@ -29,5 +29,21 @@ export default class RegisterApi {
       console.log(e, "Failed to login");
       toast.error("Failed to login");
     }
+  }
+
+  public static async getEmailbyUser(email: string) {
+    try {
+      const details = await axios.get(
+        `http://localhost:8000/register/user?email=${email}`
+      );
+      // toast.success("Get the user details by email");
+      return details.data;
+    } catch (e) {
+      console.log(e, "Failed to Get the user details by email");
+      // toast.error("Failed to Get the user details by email");
+    }
+  }
+  public static async Logout() {
+    toast.error("Logout time is expired!");
   }
 }

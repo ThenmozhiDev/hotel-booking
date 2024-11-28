@@ -21,3 +21,7 @@ code {
   font-family: "Mulish";
   src: url("./assets/Mulish-VariableFont_wght.ttf") format("truetype");
 }
+@font-face {
+  font-family: "NotoSansJP";
+  src: url("./assets/NotoSansJP-VariableFont_wght.ttf") format("truetype");
+}

@@ -5,9 +5,9 @@ import Footer from "./footer/Footer";
 
 export default function AppLayout({ children, ...props }: BoxProps) {
   return (
-    <Box p={3} flexGrow={1} overflow="hidden">
+    <Box flexGrow={1} overflow="hidden">
       <Box padding={4} width="100%" maxWidth={1280} margin="auto">
-        <Header />;
+        <Header />
       </Box>
       <Outlet />
       <Footer />

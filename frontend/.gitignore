@@ -1,0 +1,16 @@
+# Nest.js generated directories
+dist/
+coverage/
+
+# Nest.js dependency directories
+node_modules/
+
+# Nest.js environment files
+# .env
+.env.*
+
+# Nest.js log files
+*.log
+
+# Nest.js temporary files
+*.tmp

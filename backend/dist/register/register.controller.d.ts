@@ -1,8 +1,8 @@
-import { RegisterService } from './register.service';
-import { RegisterDto } from './dto/register.dto';
-import { LoginDto } from 'src/Login/dto/login.dto';
+import { RegisterService } from "./register.service";
+import { RegisterDto } from "./dto/register.dto";
+import { LoginDto } from "src/Login/dto/login.dto";
 export declare class RegisterController {
-    private registerService;
+    private readonly registerService;
     constructor(registerService: RegisterService);
     signUp(createRegisterDto: RegisterDto): Promise<{
         message: string;
@@ -11,4 +11,5 @@ export declare class RegisterController {
     login(loginDto: LoginDto): Promise<{
         accessToken: any;
     }>;
+    getUserByEmail(email: string): Promise<import("./schema/register.schema").Register>;
 }
